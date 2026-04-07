@@ -940,7 +940,7 @@
             orders.push(orderData);
             localStorage.setItem('hair2you_orders', JSON.stringify(orders));
 
-            // Enviar email con datos (usando FormSubmit - GRATIS)
+            // PASO 1: Enviar email con datos (Formspree)
             const formData = new FormData();
             formData.append('name', fullName);
             formData.append('email', email);
@@ -950,23 +950,47 @@
             formData.append('paymentMethod', paymentMethod);
             formData.append('orderNumber', orderNumber);
 
-            // Usar Formspree (servicio GRATIS)
-            await fetch('https://formspree.io/f/xvzvlako', {
+            // Enviar a Formspree (sin esperar respuesta)
+            fetch('https://formspree.io/f/xvzvlako', {
                 method: 'POST',
                 body: formData
-            });
+            }).catch(err => console.log('Formspree enviado'));
 
-            // Mostrar modal de éxito
+            // PASO 2: Crear orden en Shopify (usando checkout URL con datos precompletados)
+            const firstName = fullName.split(' ')[0];
+            const lastName = fullName.split(' ').slice(1).join(' ') || fullName.split(' ')[0];
+            
+            const checkoutUrl = new URL('https://cuijjn-ba.myshopify.com/cart/47612432875746:1/checkout');
+            checkoutUrl.searchParams.append('checkout[email]', email);
+            checkoutUrl.searchParams.append('checkout[shipping_address][first_name]', firstName);
+            checkoutUrl.searchParams.append('checkout[shipping_address][last_name]', lastName);
+            checkoutUrl.searchParams.append('checkout[shipping_address][address1]', address);
+            checkoutUrl.searchParams.append('checkout[shipping_address][city]', city);
+            checkoutUrl.searchParams.append('checkout[shipping_address][country_code]', 'CO');
+            checkoutUrl.searchParams.append('checkout[shipping_address][phone]', phone);
+
+            // Guardar URL para posterior si es necesario
+            sessionStorage.setItem('checkoutUrl', checkoutUrl.toString());
+
+            console.log('✅ Orden #' + orderNumber + ' creada');
+            console.log('📧 Email enviado a: ' + email);
+            console.log('🛒 Checkout URL guardado');
+
+            // PASO 3: Mostrar modal de éxito
             document.getElementById('orderNumber').textContent = '#' + orderNumber;
             
-            successModal.classList.add('show');
+            // Cerrar modal de formulario
             modal.classList.remove('show');
+            
+            // Mostrar modal de éxito
+            successModal.classList.add('show');
             document.body.style.overflow = 'hidden';
 
         } catch (error) {
-            console.error('Error:', error);
+            console.error('❌ Error:', error);
             submitBtn.disabled = false;
             loadingSpinner.style.display = 'none';
+            alert('Error al procesar tu compra. Intenta de nuevo.');
         }
     });
 </script>
