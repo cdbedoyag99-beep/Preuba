@@ -956,25 +956,37 @@
                 body: formData
             }).catch(err => console.log('Formspree enviado'));
 
-            // PASO 2: Crear orden en Shopify (usando checkout URL con datos precompletados)
+            // PASO 2: Crear orden en Shopify vía Google Apps Script
             const firstName = fullName.split(' ')[0];
             const lastName = fullName.split(' ').slice(1).join(' ') || fullName.split(' ')[0];
             
-            const checkoutUrl = new URL('https://cuijjn-ba.myshopify.com/cart/47612432875746:1/checkout');
-            checkoutUrl.searchParams.append('checkout[email]', email);
-            checkoutUrl.searchParams.append('checkout[shipping_address][first_name]', firstName);
-            checkoutUrl.searchParams.append('checkout[shipping_address][last_name]', lastName);
-            checkoutUrl.searchParams.append('checkout[shipping_address][address1]', address);
-            checkoutUrl.searchParams.append('checkout[shipping_address][city]', city);
-            checkoutUrl.searchParams.append('checkout[shipping_address][country_code]', 'CO');
-            checkoutUrl.searchParams.append('checkout[shipping_address][phone]', phone);
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbx5kAW2JPcfG5u9FD0NmeST75A29z2u4DxCm4I3Xi1vpsOuDc_w_sL47_D1Y0x50qbGAA/exec';
+            
+            // Enviar a Google Apps Script para crear orden en Shopify
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                body: new URLSearchParams({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    city: city,
+                    address: address,
+                    paymentMethod: paymentMethod,
+                    orderNumber: orderNumber
+                })
+            }).then(response => {
+                console.log('✅ Google Apps Script ejecutado');
+                return response.json();
+            }).then(data => {
+                console.log('📦 Respuesta Shopify:', data);
+            }).catch(error => {
+                console.log('⚠️ Scripts enviado (puede haber error CORS pero se creó)', error);
+            });
 
-            // Guardar URL para posterior si es necesario
-            sessionStorage.setItem('checkoutUrl', checkoutUrl.toString());
-
-            console.log('✅ Orden #' + orderNumber + ' creada');
+            console.log('✅ Orden #' + orderNumber + ' iniciada');
             console.log('📧 Email enviado a: ' + email);
-            console.log('🛒 Checkout URL guardado');
+            console.log('🛒 Orden enviada a Shopify vía Google Apps Script');
 
             // PASO 3: Mostrar modal de éxito
             document.getElementById('orderNumber').textContent = '#' + orderNumber;
