@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hair2You - Detén la Caída en 10 Días | Glowin Store</title>
-    <meta name="description" content="Hair2You: Loción Capilar + Shot de Crecimiento. Compra directa con formulario.">
+    <meta name="description" content="Hair2You: Loción Capilar + Shot de Crecimiento. Compra directa.">
     <style>
         * {
             margin: 0;
@@ -528,30 +528,6 @@
             cursor: not-allowed;
         }
 
-        .form-message {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: none;
-        }
-
-        .form-message.success {
-            display: block;
-            background: #E6F9E6;
-            color: #065A06;
-            border: 1px solid var(--accent);
-        }
-
-        .form-message.error {
-            display: block;
-            background: #FFF0F0;
-            color: #A32D2D;
-            border: 1px solid #E74C3C;
-        }
-
         .loading-spinner {
             display: none;
             width: 20px;
@@ -864,8 +840,6 @@
             <button type="submit" class="submit-btn" id="submitBtn">
                 CONFIRMAR COMPRA - $89.900
             </button>
-
-            <div class="form-message" id="formMessage"></div>
         </form>
     </div>
 </div>
@@ -876,7 +850,7 @@
         <div class="success-content">
             <div class="success-icon">✅</div>
             <h2>¡Gracias por tu Compra!</h2>
-            <p>Tu orden ha sido confirmada correctamente.</p>
+            <p>Tu pedido ha sido recibido correctamente.</p>
             
             <div class="order-number">
                 Número de Orden: <span id="orderNumber">#12345</span>
@@ -889,7 +863,7 @@
             </div>
 
             <div style="background: #E6F3FF; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                <p style="margin: 0; font-size: 0.95rem; color: var(--text-light);">📧 Revisa tu email (<span id="orderEmail">email@example.com</span>) para confirmación y seguimiento</p>
+                <p style="margin: 0; font-size: 0.95rem; color: var(--text-light);">📧 Revisa tu email para confirmación y seguimiento</p>
             </div>
 
             <button class="close-success-btn" onclick="closeSuccessModal()">Entendido, Gracias</button>
@@ -898,15 +872,11 @@
 </div>
 
 <script>
-    // ⚠️ REEMPLAZA ESTO CON TU URL DE ZAPIER WEBHOOK
-    const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/XXXXXXXXXX/YYYYYYYYYYYYYY/';
-    
     const modal = document.getElementById('purchaseModal');
     const successModal = document.getElementById('successModal');
     const form = document.getElementById('purchaseForm');
     const submitBtn = document.getElementById('submitBtn');
     const loadingSpinner = document.getElementById('loadingSpinner');
-    const formMessage = document.getElementById('formMessage');
 
     function openModal() {
         modal.classList.add('show');
@@ -917,7 +887,6 @@
         modal.classList.remove('show');
         document.body.style.overflow = 'auto';
         form.reset();
-        formMessage.style.display = 'none';
         submitBtn.disabled = false;
         loadingSpinner.style.display = 'none';
     }
@@ -947,64 +916,59 @@
         const address = document.getElementById('address').value;
         const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-        if (!fullName || !email || !phone || !address || !city) {
-            showMessage('Por favor completa todos los campos', 'error');
-            return;
-        }
-
         submitBtn.disabled = true;
         loadingSpinner.style.display = 'block';
 
         try {
-            // Generar un número de orden único (para el popup)
+            // Generar número de orden único
             const orderNumber = Math.floor(100000 + Math.random() * 900000);
 
-            // Enviar a Zapier
-            const response = await fetch(ZAPIER_WEBHOOK, {
+            // Guardar datos en localStorage (para historial local)
+            const orderData = {
+                orderNumber,
+                fullName,
+                email,
+                phone,
+                city,
+                address,
+                paymentMethod,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Guardar en localStorage
+            let orders = JSON.parse(localStorage.getItem('hair2you_orders') || '[]');
+            orders.push(orderData);
+            localStorage.setItem('hair2you_orders', JSON.stringify(orders));
+
+            // Enviar email con datos (usando FormSubmit - GRATIS)
+            const formData = new FormData();
+            formData.append('name', fullName);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('city', city);
+            formData.append('address', address);
+            formData.append('paymentMethod', paymentMethod);
+            formData.append('orderNumber', orderNumber);
+
+            // Usar FormSubmit (servicio GRATIS)
+            await fetch('https://formspree.io/f/xeojwqde', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    firstName: fullName.split(' ')[0],
-                    lastName: fullName.split(' ').slice(1).join(' ') || fullName.split(' ')[0],
-                    email: email,
-                    phone: phone,
-                    city: city,
-                    address: address,
-                    paymentMethod: paymentMethod,
-                    orderNumber: orderNumber,
-                    timestamp: new Date().toISOString()
-                })
+                body: formData
             });
 
-            if (response.ok) {
-                // Mostrar modal de éxito
-                document.getElementById('orderNumber').textContent = '#' + orderNumber;
-                document.getElementById('orderEmail').textContent = email;
-                
-                successModal.classList.add('show');
-                modal.classList.remove('show');
-                document.body.style.overflow = 'hidden';
-            } else {
-                showMessage('Error al procesar la orden. Intenta de nuevo.', 'error');
-                submitBtn.disabled = false;
-                loadingSpinner.style.display = 'none';
-            }
+            // Mostrar modal de éxito
+            document.getElementById('orderNumber').textContent = '#' + orderNumber;
+            
+            successModal.classList.add('show');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'hidden';
 
         } catch (error) {
             console.error('Error:', error);
-            showMessage('Error de conexión. Verifica tu webhook URL.', 'error');
             submitBtn.disabled = false;
             loadingSpinner.style.display = 'none';
         }
     });
-
-    function showMessage(text, type) {
-        formMessage.textContent = text;
-        formMessage.className = `form-message ${type}`;
-        formMessage.style.display = 'block';
-    }
 </script>
 
 </body>
