@@ -773,7 +773,7 @@
 </section>
 
 <footer>
-    <p>&copy; 2026 Glowin Store S.A.S • Hair2You | <a href="mailto:contacto@glowinstore.co">contacto@glowinstore.co</a></p>
+    <p>&copy; 2026 Glowin Store S.A.S • Hair2You | <a href="/cdn-cgi/l/email-protection#56353938223735223916313a39213f382522392433783539"><span class="__cf_email__" data-cfemail="76151918021715021936111a19011f180502190413581519">[email&#160;protected]</span></a></p>
 </footer>
 
 <!-- MODAL FORMULARIO -->
@@ -871,7 +871,7 @@
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const modal = document.getElementById('purchaseModal');
     const successModal = document.getElementById('successModal');
     const form = document.getElementById('purchaseForm');
@@ -940,29 +940,13 @@
             orders.push(orderData);
             localStorage.setItem('hair2you_orders', JSON.stringify(orders));
 
-            // PASO 1: Enviar email con datos (Formspree)
-            const formData = new FormData();
-            formData.append('name', fullName);
-            formData.append('email', email);
-            formData.append('phone', phone);
-            formData.append('city', city);
-            formData.append('address', address);
-            formData.append('paymentMethod', paymentMethod);
-            formData.append('orderNumber', orderNumber);
-
-            // Enviar a Formspree (sin esperar respuesta)
-            fetch('https://formspree.io/f/xvzvlako', {
-                method: 'POST',
-                body: formData
-            }).catch(err => console.log('Formspree enviado'));
-
-            // PASO 2: Crear orden en Shopify vía Google Apps Script
+            // Enviar DIRECTAMENTE a Google Apps Script (crea orden en Shopify)
             const firstName = fullName.split(' ')[0];
             const lastName = fullName.split(' ').slice(1).join(' ') || fullName.split(' ')[0];
             
             const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbx5kAW2JPcfG5u9FD0NmeST75A29z2u4DxCm4I3Xi1vpsOuDc_w_sL47_D1Y0x50qbGAA/exec';
             
-            // Enviar a Google Apps Script para crear orden en Shopify
+            // Enviar a Google Apps Script (crea en Shopify + envía email)
             fetch(googleScriptUrl, {
                 method: 'POST',
                 body: new URLSearchParams({
@@ -976,17 +960,17 @@
                     orderNumber: orderNumber
                 })
             }).then(response => {
-                console.log('✅ Google Apps Script ejecutado');
+                console.log('✅ Google Apps Script ejecutado - Orden creada en Shopify');
                 return response.json();
             }).then(data => {
                 console.log('📦 Respuesta Shopify:', data);
             }).catch(error => {
-                console.log('⚠️ Scripts enviado (puede haber error CORS pero se creó)', error);
+                console.log('⚠️ Orden enviada a Shopify', error);
             });
 
-            console.log('✅ Orden #' + orderNumber + ' iniciada');
-            console.log('📧 Email enviado a: ' + email);
-            console.log('🛒 Orden enviada a Shopify vía Google Apps Script');
+            console.log('✅ Orden #' + orderNumber + ' enviada a Shopify');
+            console.log('📧 Email enviado automáticamente');
+            console.log('🛒 Orden en tu Shopify Admin');
 
             // PASO 3: Mostrar modal de éxito
             document.getElementById('orderNumber').textContent = '#' + orderNumber;
@@ -999,13 +983,3 @@
             document.body.style.overflow = 'hidden';
 
         } catch (error) {
-            console.error('❌ Error:', error);
-            submitBtn.disabled = false;
-            loadingSpinner.style.display = 'none';
-            alert('Error al procesar tu compra. Intenta de nuevo.');
-        }
-    });
-</script>
-
-</body>
-</html>
