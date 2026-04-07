@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair2You - Detén la Caída en 10 Días | Glowin Store</title>
+    <meta name="description" content="Hair2You: Loción Capilar + Shot de Crecimiento. Detén la caída desde la semana 1. 18.000+ clientes satisfechos en Colombia.">
+    <meta name="theme-color" content="#D84C2C">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #D84C2C;
+            --primary-light: #E85D3D;
+            --primary-dark: #A83620;
+            --secondary: #1A1A1A;
+            --accent: #2ECC71;
+            --accent-light: #27AE60;
+            --text: #0F0F0F;
+            --text-light: #666;
+            --bg: #FAFAFA;
+            --bg-light: #F5F5F5;
+            --border: #E0E0E0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1rem;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .header-cta {
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .header-cta:hover {
+            background: var(--primary-dark);
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .highlight {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #CCC;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(216, 76, 44, 0.3);
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+
+        .hero-cta:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(216, 76, 44, 0.4);
+        }
+
+        .guarantee {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* SECTIONS */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        section.white {
+            background: white;
+        }
+
+        section.light {
+            background: var(--bg-light);
+        }
+
+        /* PROBLEM */
+        .problem {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .problem-content h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .problem-content p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .problem-visual {
+            background: linear-gradient(135deg, #FFE5D9 0%, #FFD4C8 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .problem-visual-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .problem {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* BENEFITS */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* TABLE */
+        .comparison-wrapper {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .check {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .cross {
+            color: #E74C3C;
+            font-weight: 700;
+        }
+
+        /* TESTIMONIALS */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .testimonial-location {
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .testimonial-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* PRICING */
+        .pricing-main {
+            background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(216, 76, 44, 0.1) 0%, transparent 50%);
+        }
+
+        .pricing-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-new {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price-savings {
+            background: var(--primary);
+            color: white;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            text-align: left;
+            display: inline-block;
+            margin-top: 1.5rem;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            margin: 0.8rem 0;
+            font-size: 1rem;
+        }
+
+        .pricing-feature::before {
+            content: '✓';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 1rem;
+            font-weight: 700;
+        }
+
+        /* CTA BUTTONS */
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(46, 204, 113, 0.4);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-light);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-content {
+            padding: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* FOOTER CTA */
+        .footer-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-main {
+                padding: 2rem 1.5rem;
+            }
+
+            .price-new {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <a href="#" class="logo">Hair2You</a>
+        <a href="#pricing" class="header-cta">COMPRAR AHORA</a>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Detén la Caída en <span class="highlight">10 Días</span></h1>
+        <p>18.000+ colombianos pararon la caída. Tú estás esperando qué.</p>
+        <a href="#benefits" class="hero-cta">VER CÓMO FUNCIONA</a>
+        <a href="#pricing" class="hero-cta" style="background: rgba(255,255,255,0.2); border: 2px solid white;">COMPRAR AHORA</a>
+        <p class="guarantee">✓ Garantía 30 días | ✓ Envío gratis a todo el país</p>
+    </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="section white" id="problem">
+    <div class="problem">
+        <div class="problem-content">
+            <h2>¿Cada mañana tu cepillo está lleno de pelos?</h2>
+            <p>Eso no es normal. Es la señal de que el folículo está fallando.</p>
+            <p style="margin-top: 1.5rem; font-weight: 600; color: var(--text);">Buscas el ángulo bueno en fotos. Te pones gorra. Evitas la luz directa en reuniones.</p>
+            <p>Esa no es una forma de vivir.</p>
+            <p style="margin-top: 1.5rem; color: var(--primary); font-weight: 600;">El cortisol generado por el estrés crónico interrumpe el ciclo del folículo. Es fisiología, no excusa.</p>
+        </div>
+        <div class="problem-visual">
+            <div class="problem-visual-text">40% de pérdida de densidad en 6 meses sin tratamiento</div>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFITS SECTION -->
+<section class="section light" id="benefits">
+    <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem; font-weight: 700;">La Solución: Loción + Shot de Crecimiento</h2>
+    <div class="benefits">
+        <div class="benefit-card">
+            <span class="benefit-icon">⏱️</span>
+            <h3>Resultados en 10 Días</h3>
+            <p>La mayoría de clientes reporta cepillo más limpio desde la semana 2. Crecimiento visible en 4-8 semanas.</p>
+        </div>
+        <div class="benefit-card">
+            <span class="benefit-icon">💪</span>
+            <h3>Doble Acción</h3>
+            <p>Loción diaria activa circulación. Shot 3x/semana estimula la raíz directamente. Trabaja mientras tú haces tu vida.</p>
+        </div>
+        <div class="benefit-card">
+            <span class="benefit-icon">🛡️</span>
+            <h3>Sin Efecto Rebote</h3>
+            <p>A diferencia del minoxidil, la caída NO regresa rápida y fuerte. Reducción gradual y controlada.</p>
+        </div>
+        <div class="benefit-card">
+            <span class="benefit-icon">✅</span>
+            <h3>Sin Secundarios</h3>
+            <p>Ningún efecto secundario significativo documentado. Sin irritación, sin descamación, sin complicaciones.</p>
+        </div>
+        <div class="benefit-card">
+            <span class="benefit-icon">💵</span>
+            <h3>Precio Real</h3>
+            <p>$89.900 el combo completo. Sin consultas médicas adicionales. 40% de descuento vs precio regular.</p>
+        </div>
+        <div class="benefit-card">
+            <span class="benefit-icon">🎯</span>
+            <h3>Garantía Total</h3>
+            <p>Si no ves cambio en 10 días de uso correcto, devolvemos tu dinero. Sin preguntas.</p>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARISON SECTION -->
+<section class="section white">
+    <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 2rem; font-weight: 700;">¿Por qué Hair2You y no Minoxidil?</h2>
+    <div class="comparison-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Atributo</th>
+                    <th>Hair2You Combo</th>
+                    <th>Minoxidil Tópico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Efecto Rebote</strong></td>
+                    <td><span class="check">✓ Sin caída brusca</span></td>
+                    <td><span class="cross">✖ Regresa más fuerte</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Efectos Secundarios</strong></td>
+                    <td><span class="check">✓ Ninguno documentado</span></td>
+                    <td><span class="cross">● Irritación, descamación</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Doble Acción</strong></td>
+                    <td><span class="check">✓ Loción + Shot</span></td>
+                    <td><span class="cross">● Solo vasodilatador</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Costo 2 Meses</strong></td>
+                    <td><span class="check">✓ $89.900 total</span></td>
+                    <td><span class="cross">● $40-80k/mes + consulta</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="section light">
+    <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem; font-weight: 700;">Lo Que Dicen Nuestros Clientes</h2>
+    <div class="testimonials-grid">
+        <div class="testimonial">
+            <div class="testimonial-text">"Tenía la coronilla que se empezaba a ver pelada y eso me generaba una ansiedad horrible. Con el Shot aplicado directo en esa zona noté diferencia desde la semana 2. El pelo empieza a salir de nuevo."</div>
+            <div class="testimonial-author">Alejandra Ríos C.</div>
+            <div class="testimonial-location">Cali, Colombia</div>
+            <span class="testimonial-badge">✓ Compra Verificada</span>
+        </div>
+        <div class="testimonial">
+            <div class="testimonial-text">"Después del embarazo se me cayó muchísimo el cabello. Con Hair2You en un mes la caída bajó visiblemente. Ya llevo 3 meses y el cabello volvió a tener volumen."</div>
+            <div class="testimonial-author">Daniela Moreno J.</div>
+            <div class="testimonial-location">Bogotá, Colombia</div>
+            <span class="testimonial-badge">✓ Compra Verificada</span>
+        </div>
+        <div class="testimonial">
+            <div class="testimonial-text">"Llevo 2 meses usando el shot y lo que más noto es que el cabello sale más fuerte — antes se rompía fácil al peinarlo, ahora aguanta mucho más. La densidad también mejoró."</div>
+            <div class="testimonial-author">Marcela Salazar D.</div>
+            <div class="testimonial-location">Manizales, Colombia</div>
+            <span class="testimonial-badge">✓ Compra Verificada</span>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="section white" id="pricing">
+    <div class="pricing-main">
+        <div class="pricing-content">
+            <h2 style="margin-bottom: 1.5rem; font-size: 2rem;">Hair2You - Combo Completo</h2>
+            <div class="price-old">Precio Regular: $149.830</div>
+            <div class="price-new">$89.900</div>
+            <div class="price-savings">AHORRA $59.930 (40% OFF)</div>
+            <div class="pricing-features">
+                <div class="pricing-feature">Loción Capilar (Diaria)</div>
+                <div class="pricing-feature">Shot de Crecimiento (3x/semana)</div>
+                <div class="pricing-feature">Garantía 30 Días</div>
+                <div class="pricing-feature">Envío Gratis a Todo el País</div>
+                <div class="pricing-feature">Despacho en 24-48 horas</div>
+            </div>
+            <a href="https://glowinstore.myshopify.com/cart/47612432875746:1" class="cta-button" style="margin-top: 2rem; font-size: 1.2rem; padding: 1.5rem 3rem;">
+                SÍ, QUIERO DETENER LA CAÍDA
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">→ Irás directo al carrito de Shopify</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section light">
+    <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 2rem; font-weight: 700;">Preguntas Frecuentes</h2>
+
+    <div class="faq-item open">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>¿En cuánto tiempo veo resultados?</span>
+            <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-content">La mayoría de clientes reporta reducción visible en la caída desde los primeros 10 días de uso regular. El crecimiento de cabello nuevo en zonas específicas se observa típicamente entre las semanas 4 y 8. Para transformación completa, Hair2You recomienda 3 meses de tratamiento consistente.</div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>¿Se puede usar todos los días?</span>
+            <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-content">El Shot de Crecimiento está diseñado para usarse 2–3 veces por semana directamente en el cuero cabelludo, no a diario. Si quieres activación folicular diaria, complementa con la Loción Capilar que sí está formulada para uso diario mañana y noche.</div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>¿Tiene garantía si no me funciona?</span>
+            <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-content">Hair2You tiene 5 años en el mercado colombiano con más de 18.000 clientes satisfechos. Si usas el producto correctamente durante 10 días y no notas ningún cambio en la caída, te gestionamos la solución. El compromiso es total con los resultados.</div>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>¿Cómo llega y en cuánto tiempo?</span>
+            <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+            <div class="faq-content">Hacemos envíos a toda Colombia con operadores logísticos nacionales. Los pedidos se despachan en 24–48 horas hábiles tras la confirmación de datos. El tiempo de entrega varía entre 2 y 5 días hábiles según tu ciudad.</div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+    <h2>18.000+ Colombianos Pararon la Caída</h2>
+    <p>¿Tú qué estás esperando?</p>
+    <a href="https://glowinstore.myshopify.com/cart/47612432875746:1" class="cta-button" style="background: white; color: var(--primary); font-weight: 700; padding: 1.2rem 3rem; font-size: 1.1rem;">
+        COMPRA AHORA - ÚLTIMA OPORTUNIDAD
+    </a>
+    <p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.9;">
+        Envío gratis • Garantía 30 días • Despacho 24-48 horas
+    </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Glowin Store S.A.S • Hair2You | <a href="mailto:contacto@glowinstore.co">contacto@glowinstore.co</a></p>
+</footer>
+
+<script>
+    // FAQs functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', function() {
+                item.classList.toggle('open');
+            });
+        });
+    });
+
+    // Analytics - Opcional: rastrear clicks de compra
+    document.querySelectorAll('.cta-button').forEach(btn => {
+        if (btn.href.includes('myshopify.com')) {
+            btn.addEventListener('click', function() {
+                console.log('Click en botón de compra');
+                // Aquí puedes agregar tracking de GA4, Facebook Pixel, etc.
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
